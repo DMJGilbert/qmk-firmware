@@ -44,3 +44,4 @@ jobs:
           files: |
             /home/runner/qmk_firmware/*.hex
             /home/runner/qmk_firmware/*.bin
+            /home/runner/qmk_firmware/*.uf2
