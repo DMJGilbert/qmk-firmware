@@ -31,22 +31,11 @@ jobs:
 
       - name: Copy built firmware
         run: |
-          rm -f $GITHUB_WORKSPACE/*.hex
-          rm -f $GITHUB_WORKSPACE/*.bin
-          find ~/qmk_firmware -maxdepth 1 -name "*.hex" -exec \cp '{}' $GITHUB_WORKSPACE \;
-          find ~/qmk_firmware -maxdepth 1 -name "*.bin" -exec \cp '{}' $GITHUB_WORKSPACE \;
-          ls $GITHUB_WORKSPACE
+          find ~/qmk_firmware -maxdepth 1 -name "*.hex" -exec mv '{}' ~/qmk_firmware/firmware \;
+          find ~/qmk_firmware -maxdepth 1 -name "*.bin" -exec mv '{}' ~/qmk_firmware/firmware \;
 
-      # - name: Package assets
-      #   run: |
-      #     mkdir ~/qmk_firmware/firmware
-      #     find ~/qmk_firmware -maxdepth 1 -name "*.hex" -exec mv '{}' ~/qmk_firmware/firmware \;
-      #     find ~/qmk_firmware -maxdepth 1 -name "*.bin" -exec mv '{}' ~/qmk_firmware/firmware \;
-      #     tar -cvf /home/runner/filename.tar /home/runner/qmk_firmware
-      #     mv /home/runner/filename.tar /home/runner/qmk_firmware/firmware/filename.tar
-
-      # - name: Release
-      #   uses: softprops/action-gh-release@v2
-      #   with:
-      #     files: |
-      #       /home/runner/qmk_firmware/firmware/*
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            /home/runner/qmk_firmware/firmware/*
