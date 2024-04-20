@@ -34,6 +34,7 @@ jobs:
         run: |
           qmk compile -kb crkbd -km dmjgilbert
           qmk compile -kb 3w6/rev2 -km dmjgilbert
+          qmk compile -kb dasbob -km dmjgilbert
           ls ~/qmk_firmware/
 
       - name: Release
@@ -43,3 +44,4 @@ jobs:
           files: |
             /home/runner/qmk_firmware/*.hex
             /home/runner/qmk_firmware/*.bin
+            /home/runner/qmk_firmware/*.uf2
