@@ -33,6 +33,7 @@ jobs:
       - name: Build
         run: |
           qmk compile -kb crkbd -km dmjgilbert
+          qmk compile -kb 3w6 -km dmjgilbert
           ls ~/qmk_firmware/
 
       - name: Release
