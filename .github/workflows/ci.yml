@@ -36,6 +36,7 @@ jobs:
           qmk compile -kb crkbd/rev1 -km dmjgilbert
           qmk compile -kb 3w6/rev2 -km dmjgilbert
           qmk compile -kb dasbob -km dmjgilbert
+          qmk compile -kb bastardkb/charybdis/3x5 -km dmjgilbert
           ls ~/qmk_firmware/
 
       - name: Release
