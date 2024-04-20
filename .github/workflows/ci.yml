@@ -40,4 +40,5 @@ jobs:
         with:
           tag_name: ${{ env.TAG }}
           files: |
-            ~/qmk_firmware/crkbd_rev1_dmjgilbert.hex
+            /home/runner/qmk_firmware/*.hex
+            /home/runner/qmk_firmware/*.bin
