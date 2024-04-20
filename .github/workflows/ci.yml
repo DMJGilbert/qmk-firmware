@@ -32,11 +32,12 @@ jobs:
       - name: Build
         run: |
           qmk compile -kb crkbd -km dmjgilbert
+          ls ~/qmk_firmware/
 
-      - name: Release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ env.TAG }}
-          files: |
-            ~/qmk_firmware/*.hex
-            ~/qmk_firmware/*.bin
+      # - name: Release
+      #   uses: softprops/action-gh-release@v2
+      #   with:
+      #     tag_name: ${{ env.TAG }}
+      #     files: |
+      #       ~/qmk_firmware/*.hex
+      #       ~/qmk_firmware/*.bin
