@@ -20,6 +20,11 @@
 
 enum charybdis_keymap_layers { _DAZMAK = 0, _SYMBOL, _NAVIG };
 
+enum combo_events {
+    LEFT_MOUSE_CLICK,
+    RIGHT_MOUSE_CLICK,
+};
+
 const uint16_t PROGMEM left_mouse_click_combo[]  = {KC_N, KC_E, COMBO_END};
 const uint16_t PROGMEM right_mouse_click_combo[] = {KC_E, KC_I, COMBO_END};
 
