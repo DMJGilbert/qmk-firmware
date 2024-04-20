@@ -24,10 +24,7 @@ jobs:
           python3 -m pip install --user qmk
           qmk setup -y
           ls ~/qmk_firmware
-          cp -r ~/work/qmk-firmware/qmk_firmware/keyboards ~/qmk_firmware/
-
-      - name: Set Release Date
-        run: echo "RELEASE_DATE=$(date --rfc-3339=seconds)" >> ${GITHUB_ENV}
+          cp -r ~/work/qmk-firmware/qmk-firmware/keyboards ~/qmk_firmware/
 
       - name: Build
         run: |
@@ -41,16 +38,16 @@ jobs:
           find ~/qmk_firmware -maxdepth 1 -name "*.bin" -exec \cp '{}' $GITHUB_WORKSPACE \;
           ls $GITHUB_WORKSPACE
 
-      - name: Package assets
-        run: |
-          mkdir ~/qmk_firmware/firmware
-          find ~/qmk_firmware -maxdepth 1 -name "*.hex" -exec mv '{}' ~/qmk_firmware/firmware \;
-          find ~/qmk_firmware -maxdepth 1 -name "*.bin" -exec mv '{}' ~/qmk_firmware/firmware \;
-          tar -cvf /home/runner/filename.tar /home/runner/qmk_firmware
-          mv /home/runner/filename.tar /home/runner/qmk_firmware/firmware/filename.tar
+      # - name: Package assets
+      #   run: |
+      #     mkdir ~/qmk_firmware/firmware
+      #     find ~/qmk_firmware -maxdepth 1 -name "*.hex" -exec mv '{}' ~/qmk_firmware/firmware \;
+      #     find ~/qmk_firmware -maxdepth 1 -name "*.bin" -exec mv '{}' ~/qmk_firmware/firmware \;
+      #     tar -cvf /home/runner/filename.tar /home/runner/qmk_firmware
+      #     mv /home/runner/filename.tar /home/runner/qmk_firmware/firmware/filename.tar
 
-      - name: Release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: |
-            /home/runner/qmk_firmware/firmware/*
+      # - name: Release
+      #   uses: softprops/action-gh-release@v2
+      #   with:
+      #     files: |
+      #       /home/runner/qmk_firmware/firmware/*
