@@ -17,6 +17,10 @@ jobs:
             ~/qmk_firmware
           key: ${{ runner.os }}-qmk_firmware
 
+      - name: Set release tag
+        run: |
+          echo "TAG=`date --rfc-3339=seconds`" >> $GITHUB_ENV
+
       - name: Setup
         run: |
           export QMK_HOME='~/qmk_firmware'
@@ -29,13 +33,10 @@ jobs:
         run: |
           qmk compile -kb crkbd -km dmjgilbert
 
-      - name: Copy built firmware
-        run: |
-          find ~/qmk_firmware -maxdepth 1 -name "*.hex" -exec mv '{}' ~/qmk_firmware/firmware \;
-          find ~/qmk_firmware -maxdepth 1 -name "*.bin" -exec mv '{}' ~/qmk_firmware/firmware \;
-
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ env.TAG }}
           files: |
-            /home/runner/qmk_firmware/firmware/*
+            ~/qmk_firmware/*.hex
+            ~/qmk_firmware/*.bin
