@@ -24,11 +24,11 @@ jobs:
           python3 -m pip install --user qmk
           qmk setup -y
           ls ~/qmk_firmware
-          cp -r ~/work/qmk-firmware/qmk-firmware/keyboards ~/qmk_firmware/
+          cp -r $GITHUB_WORKSPACE/keyboards $QMK_HOME
 
       - name: Build
         run: |
-          qmk compile -kb crkkbd -km dmjgilbert
+          qmk compile -kb crkbd -km dmjgilbert
 
       - name: Copy built firmware
         run: |
