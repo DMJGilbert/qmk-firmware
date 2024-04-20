@@ -19,7 +19,7 @@ jobs:
 
       - name: Set release tag
         run: |
-          echo "TAG=`date --rfc-3339=seconds`" >> $GITHUB_ENV
+          echo "TAG=`date --rfc-3339=date`" >> $GITHUB_ENV
 
       - name: Setup
         run: |
