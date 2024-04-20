@@ -1,0 +1,44 @@
+name: Build QMK firmware
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/qmk_firmware
+          key: ${{ runner.os }}-qmk_firmware
+
+      - name: Set release tag
+        run: |
+          echo "TAG=`date --rfc-3339=date`" >> $GITHUB_ENV
+
+      - name: Setup
+        run: |
+          export QMK_HOME='~/qmk_firmware'
+          pip install milc
+          python3 -m pip install --user qmk
+          qmk setup -y
+          cp -r ~/work/qmk-firmware/qmk-firmware/keyboards ~/qmk_firmware/
+
+      - name: Build
+        run: |
+          qmk compile -kb crkbd -km dmjgilbert
+          ls ~/qmk_firmware/
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.TAG }}
+          files: |
+            /home/runner/qmk_firmware/*.hex
+            /home/runner/qmk_firmware/*.bin
