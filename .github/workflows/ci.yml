@@ -8,7 +8,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+
+      - name: Cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/qmk_firmware
+          key: ${{ runner.os }}-qmk_firmware
 
       - name: Setup
         run: |
@@ -17,7 +24,7 @@ jobs:
           python3 -m pip install --user qmk
           qmk setup -y
           ls ~/qmk_firmware
-          cp -r ~/work/qmk-config/qmk-config/keyboards ~/qmk_firmware/
+          cp -r ~/work/qmk-firmware/qmk_firmware/keyboards ~/qmk_firmware/
 
       - name: Set Release Date
         run: echo "RELEASE_DATE=$(date --rfc-3339=seconds)" >> ${GITHUB_ENV}
@@ -42,12 +49,8 @@ jobs:
           tar -cvf /home/runner/filename.tar /home/runner/qmk_firmware
           mv /home/runner/filename.tar /home/runner/qmk_firmware/firmware/filename.tar
 
-      - name: Create GitHub release
-        uses: marvinpinto/action-automatic-releases@latest
+      - name: Release
+        uses: softprops/action-gh-release@v2
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "${{env.RELEASE_DATE}}"
-          title: ${{ env.ReleaseVersion }}
-          prerelease: true
           files: |
             /home/runner/qmk_firmware/firmware/*
