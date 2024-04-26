@@ -42,17 +42,24 @@ void keyboard_post_init_user(void) {
     pointing_device_set_cpi(CHARYBDIS_MINIMUM_DEFAULT_DPI);
 }
 
+void on_mouse_button(uint8_t mouse_button, bool pressed) {
+    report_mouse_t report = pointing_device_get_report();
+    if (pressed) {
+        report.buttons |= mouse_button;
+    } else {
+        report.buttons &= ~mouse_button;
+    }
+    pointing_device_set_report(report);
+    pointing_device_send();
+}
+
 void process_combo_event(uint16_t combo_index, bool pressed) {
     switch (combo_index) {
         case LEFT_MOUSE_CLICK:
-            if (pressed) {
-                tap_code16(KC_BTN1);
-            }
+            on_mouse_button(MOUSE_BTN1, pressed)
             break;
         case RIGHT_MOUSE_CLICK:
-            if (pressed) {
-                tap_code16(KC_BTN2);
-            }
+            on_mouse_button(MOUSE_BTN2, pressed)
             break;
     }
 }
