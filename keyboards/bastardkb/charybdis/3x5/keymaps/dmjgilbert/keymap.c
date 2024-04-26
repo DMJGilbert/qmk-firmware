@@ -56,10 +56,10 @@ void on_mouse_button(uint8_t mouse_button, bool pressed) {
 void process_combo_event(uint16_t combo_index, bool pressed) {
     switch (combo_index) {
         case LEFT_MOUSE_CLICK:
-            on_mouse_button(MOUSE_BTN1, pressed)
+            on_mouse_button(MOUSE_BTN1, pressed);
             break;
         case RIGHT_MOUSE_CLICK:
-            on_mouse_button(MOUSE_BTN2, pressed)
+            on_mouse_button(MOUSE_BTN2, pressed);
             break;
     }
 }
