@@ -2,7 +2,7 @@
 
 #define CHARYBDIS_MINIMUM_DEFAULT_DPI 1600
 #define CHARYBDIS_DEFAULT_DPI_CONFIG_STEP 400
-#define CHARYBDIS_MINIMUM_SNIPING_DPI 200
+#define CHARYBDIS_MINIMUM_SNIPING_DPI 800
 #define CHARYBDIS_SNIPING_DPI_CONFIG_STEP 100
 
 // Thumb keymaps
@@ -37,6 +37,10 @@ combo_t key_combos[] = {
     [LEFT_MOUSE_CLICK]  = COMBO_ACTION(left_mouse_click_combo),
     [RIGHT_MOUSE_CLICK] = COMBO_ACTION(right_mouse_click_combo),
 };
+
+void keyboard_post_init_user(void) {
+    pointing_device_set_cpi(CHARYBDIS_MINIMUM_DEFAULT_DPI);
+}
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
     switch (combo_index) {
@@ -91,5 +95,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                    //`--------------------------'  `--------------------------'
     ),
 };
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    switch (get_highest_layer(state)) {
+        case _SYMBOL:
+            pointing_device_set_cpi(CHARYBDIS_MINIMUM_SNIPING_DPI);
+            break;
+        default:
+            pointing_device_set_cpi(CHARYBDIS_MINIMUM_DEFAULT_DPI);
+    }
+    return state;
+}
 
 // clang-format on
