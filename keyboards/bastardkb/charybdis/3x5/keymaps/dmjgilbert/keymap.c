@@ -1,5 +1,10 @@
 #include QMK_KEYBOARD_H
 
+#define CHARYBDIS_MINIMUM_DEFAULT_DPI 1600
+#define CHARYBDIS_DEFAULT_DPI_CONFIG_STEP 400
+#define CHARYBDIS_MINIMUM_SNIPING_DPI 200
+#define CHARYBDIS_SNIPING_DPI_CONFIG_STEP 100
+
 // Thumb keymaps
 #define LY1_ETR LT(1, KC_ENTER)       // Layer one when held, enter when tapped
 #define LY2_ESC LT(2, KC_ESCAPE)      // Layer two when held, esc when tapped
