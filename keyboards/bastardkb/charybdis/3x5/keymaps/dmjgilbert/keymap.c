@@ -1,15 +1,15 @@
 #include QMK_KEYBOARD_H
 
-#define CHARYBDIS_MINIMUM_DEFAULT_DPI 2400
+#define CHARYBDIS_MINIMUM_DEFAULT_DPI 2000
 #define CHARYBDIS_DEFAULT_DPI_CONFIG_STEP 400
 #define CHARYBDIS_MINIMUM_SNIPING_DPI 400
 #define CHARYBDIS_SNIPING_DPI_CONFIG_STEP 100
 
 // Thumb keymaps
-#define LY1_ETR LT(1, KC_ENTER)       // Layer one when held, enter when tapped
-#define LY2_ESC LT(2, KC_ESCAPE)      // Layer two when held, esc when tapped
-#define LT_BSPC MT(MOD_RSFT, KC_BSPC) // Right shift when held, backspace when tapped
-#define LCT_DOT MT(MOD_RCTL, KC_DOT)  // Right control when held, dot when tapped
+#define LY1_ETR LT(1, KC_ENTER)       // Layer one = held, enter = tapped
+#define LY2_ESC LT(2, KC_ESCAPE)      // Layer two = held, esc = tapped
+#define LT_BSPC MT(MOD_RSFT, KC_BSPC) // Right shift = held, backspace = tapped
+#define LCT_DOT MT(MOD_RCTL, KC_DOT)  // Right control = held, dot = tapped
 
 #define WIN_MOV HYPR(KC_M) //
 #define WIN_RSZ HYPR(KC_R) //
@@ -25,8 +25,43 @@
 
 enum charybdis_keymap_layers { _DAZMAK = 0, _SYMBOL, _NAVIG, _MOUSE };
 
+enum combo_events {
+  LEFT_MOUSE_CLICK,
+  RIGHT_MOUSE_CLICK,
+};
+
+const uint16_t PROGMEM left_mouse_click_combo[] = {KC_N, KC_E, COMBO_END};
+const uint16_t PROGMEM right_mouse_click_combo[] = {KC_E, KC_I, COMBO_END};
+
+combo_t key_combos[] = {
+    [LEFT_MOUSE_CLICK] = COMBO_ACTION(left_mouse_click_combo),
+    [RIGHT_MOUSE_CLICK] = COMBO_ACTION(right_mouse_click_combo),
+};
+
+void on_mouse_button(uint8_t mouse_button, bool pressed) {
+  report_mouse_t report = pointing_device_get_report();
+  if (pressed) {
+    report.buttons |= mouse_button;
+  } else {
+    report.buttons &= ~mouse_button;
+  }
+  pointing_device_set_report(report);
+  pointing_device_send();
+}
+
+void process_combo_event(uint16_t combo_index, bool pressed) {
+  switch (combo_index) {
+  case LEFT_MOUSE_CLICK:
+    on_mouse_button(MOUSE_BTN1, pressed);
+    break;
+  case RIGHT_MOUSE_CLICK:
+    on_mouse_button(MOUSE_BTN2, pressed);
+    break;
+  }
+}
+
 void keyboard_post_init_user(void) {
-    pointing_device_set_cpi(CHARYBDIS_MINIMUM_DEFAULT_DPI);
+  pointing_device_set_cpi(CHARYBDIS_MINIMUM_DEFAULT_DPI);
 }
 
 // clang-format off
