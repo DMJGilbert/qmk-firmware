@@ -55,7 +55,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [_NAVIG] = LAYOUT(
         //,--------------------------------------------.                    ,--------------------------------------------.
-            XXXXXXX,  XXXXXX,  KC_DOT,  XXXXXX,  XXXXXX,                      WIN_MOV, WRK_LFT,   KC_UP, WRK_RHT, XXXXXXX,
+            XXXXXXX, XXXXXXX,  KC_DOT, XXXXXXX, XXXXXXX,                      WIN_MOV, WRK_LFT,   KC_UP, WRK_RHT, XXXXXXX,
         //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
               KC_P1,   KC_P2,   KC_P3,   KC_P4,   KC_P5,                      WIN_SWI, KC_LEFT, KC_DOWN,KC_RIGHT, KC_PGUP,
         //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
